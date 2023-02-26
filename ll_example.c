@@ -177,7 +177,12 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
    // delete first node
    if ( value == ( *sPtr )->data ) { 
       tempPtr = *sPtr; // hold onto node being removed
-      *sPtr = ( *sPtr )->nextPtr; // de-thread the node
+      *sPtr = ( *sPtr )->nextPtr;
+      // de-thread the node
+     if(*sPtr == *tPtr){
+       free( tempPtr ); // free the de-threaded node
+      return value;
+     }
       if(*sPtr != NULL){
         (*sPtr)->pPtr=*tPtr;
         (*tPtr)->nextPtr = *sPtr;
@@ -186,7 +191,8 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
       
       return value;
    } // end if
-   else { 
+   else {
+     
       previousPtr = *sPtr;
       currentPtr = ( *sPtr )->nextPtr;
 
@@ -203,6 +209,7 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
         currentPtr->nextPtr->pPtr=previousPtr;
         }
       else{
+        if(*sPtr == NULL) goto a;
         tempPtr = previousPtr;
         previousPtr->pPtr->nextPtr = currentPtr;
         *tPtr = previousPtr->pPtr;
@@ -213,7 +220,7 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
          return value;
       
    } // end else
-
+    a:
    return '\0';
 } // end function delete
 
