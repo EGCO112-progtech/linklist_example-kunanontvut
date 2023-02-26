@@ -131,7 +131,10 @@ void insert( LLPtr *sPtr, LLPtr *tPtr , int value , char tname[] )
              previousPtr = currentPtr; // walk to ...               
              currentPtr = currentPtr->nextPtr; // ... next node 
           } // end while                                         
-    
+          else{
+            previousPtr = currentPtr; // walk to ...               
+             currentPtr = currentPtr->nextPtr; // ... next node 
+          }
           // insert new node at beginning of list
           if ( previousPtr == NULL ) { 
              newPtr->nextPtr = *sPtr;
@@ -218,13 +221,15 @@ void printList( LLPtr currentPtr,LLPtr tPtr )
       puts( "The ID is:" );
 
       // while not the end of the list
-     
-     do {
-         printf( "%d %s --> ", currentPtr->data,currentPtr->name );
-         currentPtr = currentPtr->nextPtr;   
-      }while(currentPtr->nextPtr != tPtr); // end while
+     LLPtr tmp = currentPtr;
+     while(currentPtr->nextPtr !=  tPtr->nextPtr->nextPtr){
+         printf( "%d %s ", currentPtr->data,currentPtr->name );
+         if(currentPtr->nextPtr != tPtr->nextPtr)printf("--> ");
+         currentPtr = currentPtr->nextPtr;  
+       }
+       // end while
 
-      printf( "%d %s --> NULL\n",currentPtr->data,currentPtr->name );
+      printf( "\n");
        
 
      
