@@ -79,13 +79,19 @@ int main( void )
   /* Clear all nodes at the end of nodes*/
 
   Tmp =startPtr;
-  while(Tmp!=NULL){
+  while(Tmp!=tailPtr){
     startPtr = Tmp->nextPtr;
     printf("delete ID %d\n",Tmp->data);
     free(Tmp);
     Tmp = startPtr;
   }
-  
+  if(startPtr == tailPtr){
+    printf("delete ID %d\n",startPtr->data);
+    free(startPtr);
+    startPtr == NULL;
+    tailPtr == NULL;
+    
+  }
    puts( "End of run." );
 } // end main
 
@@ -180,7 +186,8 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
       *sPtr = ( *sPtr )->nextPtr;
       // de-thread the node
      if(*sPtr == *tPtr){
-       free( tempPtr ); // free the de-threaded node
+       free( tempPtr );
+       *sPtr = NULL;// free the de-threaded node
       return value;
      }
       if(*sPtr != NULL){
@@ -210,10 +217,10 @@ int deletes( LLPtr *sPtr,LLPtr *tPtr , int value )
         }
       else{
         if(*sPtr == NULL) goto a;
-        tempPtr = previousPtr;
-        previousPtr->pPtr->nextPtr = currentPtr;
-        *tPtr = previousPtr->pPtr;
-        currentPtr->pPtr = *tPtr;
+        tempPtr = currentPtr;
+        previousPtr->nextPtr = currentPtr->nextPtr;
+        *tPtr = previousPtr;
+        currentPtr->nextPtr->pPtr = *tPtr;
         
         }
          free( tempPtr );
