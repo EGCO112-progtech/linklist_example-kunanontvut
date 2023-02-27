@@ -88,8 +88,6 @@ int main( void )
   if(startPtr == tailPtr){
     printf("delete ID %d\n",startPtr->data);
     free(startPtr);
-    startPtr == NULL;
-    tailPtr == NULL;
     
   }
    puts( "End of run." );
